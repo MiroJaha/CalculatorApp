@@ -37,13 +37,28 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
             super.onSaveInstanceState(outState)
+
         outState.putFloat("myNumber", result)
         outState.putString("answer",printedResult)
+        outState.putString("num",number)
+        outState.putStringArrayList("operators",operatorArray)
+
+        var size = numbersArray.size-1
+        for(i in 0..size)
+            outState.putFloat("$i",numbersArray[i])
+        outState.putInt("size",size)
+
     }
     override fun onRestoreInstanceState(savedInstanceState: Bundle){
             super.onRestoreInstanceState(savedInstanceState)
+        var size = savedInstanceState.getInt("size",0)
+        for(i in 0..size)
+            numbersArray.add(savedInstanceState.getFloat("$i"))
+
         result = savedInstanceState.getFloat("myNumber", 0f)
         printedResult = savedInstanceState.getString("answer")!!
+        number = savedInstanceState.getString("num")!!
+        operatorArray = savedInstanceState.getStringArrayList("operators")!!
         resultView.text = printedResult
     }
 
@@ -320,3 +335,4 @@ class MainActivity : AppCompatActivity() {
 
     }
 }
+
